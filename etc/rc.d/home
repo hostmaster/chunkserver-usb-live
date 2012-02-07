@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+
+# PROVIDE: home
+# REQUIRE: FILESYSTEMS kld
+
+. /etc/rc.subr
+
+name="home"
+stop_cmd=':'
+
+load_rc_config $name
+
+# If we do not have a writable /var, create a memory filesystem for /var
+# unless told otherwise by rc.conf.  We don't have /usr yet so use mkdir
+# instead of touch to test.  We want mount to record its mounts so we
+# have to make sure /var/db exists before doing the mount -a.
+#
+case "${homemfs}" in
+[Yy][Ee][Ss])
+	mount_md ${homesize} /usr/home "${homemfs_flags}"
+	cd /usr/users/ && find ./admin1 | cpio -pd /home/ 2> /dev/null
+
+	;;
+[Nn][Oo])
+	;;
+*)
+	if /bin/mkdir -p /usr/home/admin1/.diskless 2> /dev/null; then
+		rmdir /usr/home/admin1/.diskless
+	else
+		mount_md ${homesize} /usr/home/admin1 "${homemfs_flags}"
+	fi
+esac

@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Server has been locked"
+mount -o ro /
