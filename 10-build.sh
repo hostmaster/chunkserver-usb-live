@@ -6,8 +6,5 @@ if [ -z "${USBROOT}" -o -z "${SRC}" ]; then
 	exit 1
 fi
 
-#rm -rf ${USBROOT}
-# mkdir-p  ${USBROOT}
-
 make -C $SRC -j 2 buildkernel
 make -C $SRC -j 2 buildworld
