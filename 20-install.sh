@@ -23,7 +23,9 @@ make -C $SRC/etc DESTDIR=$USBROOT distribution
 # install client public keys
 #
 
-# /etc/rc.conf links
+# /etc/resolv.conf links
+ln -s /tmp/resolv.conf ${USBROOT}/etc/resolv.conf
+echo touch /tmp/resolv.conf ${USBROOT}/etc/rc
 
 # install rc.conf
 install -o root -g wheel -m 644 etc/rc.conf etc/crontab ${USBROOT}/etc 
@@ -32,6 +34,8 @@ install -o root -g wheel -m 644 boot/loader.conf ${USBROOT}/boot
 mkdir -p ${USBROOT}/usr/local/etc
 install -o root -g wheel -m 440 usr/local/etc/sudoers ${USBROOT}/usr/local/etc
 
+# lock-unlock
+install -o root -g wheel -m 756 bin/unlock-server bin/lock-server  ${USBROOT}/bin
 
 OPTIONS="WITHOUT_IPV6=yes WITHOUT_NLS=yes WITHOUT_LDAP=yes BATCH=yes DESTDIR=${USBROOT}"
 

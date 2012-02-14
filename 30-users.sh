@@ -14,7 +14,7 @@ echo "adminpass" | pw -V ${USBROOT}/etc useradd admin1 \
 	-d /home/admin1 -m \
 	-G wheel \
 	-c "Admin user"\
-	-s /usr/bin/bash \
+	-s /usr/local/bin/bash \
 	-h 0 
 
 # install admin's homedir skelet

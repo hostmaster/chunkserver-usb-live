@@ -18,16 +18,16 @@ load_rc_config $name
 #
 case "${homemfs}" in
 [Yy][Ee][Ss])
-	mount_md ${homesize} /usr/home "${homemfs_flags}"
+	mount_md ${homesize} /home "${homemfs_flags}"
 	cd /usr/users/ && find ./admin1 | cpio -pd /home/ 2> /dev/null
 
 	;;
 [Nn][Oo])
 	;;
 *)
-	if /bin/mkdir -p /usr/home/admin1/.diskless 2> /dev/null; then
-		rmdir /usr/home/admin1/.diskless
+	if /bin/mkdir -p /home/admin1/.diskless 2> /dev/null; then
+		rmdir /home/admin1/.diskless
 	else
-		mount_md ${homesize} /usr/home/admin1 "${homemfs_flags}"
+		mount_md ${homesize} /home/admin1 "${homemfs_flags}"
 	fi
 esac
