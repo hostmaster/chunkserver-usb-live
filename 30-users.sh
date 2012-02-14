@@ -7,17 +7,23 @@ if [ -z "${USBROOT}" ]; then
 fi
 
 # root
-echo "passwd" | pw usermod  -V ${USBROOT}/etc -h 0 root
+echo "passwd" | pw usermod  root -V ${USBROOT}/etc -h 0
 
 # add admin user
-ADMIN="admin1"
-pw \
-	-V ${USBROOT}/etc useradd ${ADMIN} \
-	-d /home/${ADMIN} -m \
+echo "adminpass" | pw -V ${USBROOT}/etc useradd admin1 \
+	-d /home/admin1 -m \
 	-G wheel \
 	-c "Admin user"\
 	-s /usr/bin/bash \
-	-h 0 \
-echo "adminpass" | pw usermod  -V ${USBROOT}/etc -h 0 ${ADMIN}
+	-h 0 
 
 # install admin's homedir skelet
+mkdir -p ${USBROOT}/usr/users/admin1
+
+for file in dot.cshrc dot.login dot.login_conf dot.mail_aliases dot.mailrc dot.profile dot.rhosts dot.shrc
+do
+	`echo $file | sed s/dot//` 
+	install -o admin1  -g admin1 -m 644  usr/users/admin1/$file ${USBROOT}/usr/users/admin1/`echo $file | sed s/dot//`
+done
+
+chroot ${USBROOT} chown admin1:admin1 /usr/users/admin1
