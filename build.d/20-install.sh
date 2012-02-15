@@ -6,11 +6,26 @@ if [ -z "${USBROOT}" -o -z "${SRC}" ]; then
 fi
 
 make -C $SRC DESTDIR=$USBROOT installkernel
+if [ $? -ne 0 ]; then
+	echo "Install KERNEL failed"
+	exit 1
+fi
+
 make -C $SRC DESTDIR=$USBROOT installworld
+if [ $? -ne 0 ]; then
+	echo "Install WORLD failed"
+	exit 1
+fi
 
 make -C $SRC/etc DESTDIR=$USBROOT distrib-dirs
-make -C $SRC/etc DESTDIR=$USBROOT distribution
+if [ $? -ne 0 ]; then
+	exit 1
+fi
 
+make -C $SRC/etc DESTDIR=$USBROOT distribution
+if [ $? -ne 0 ]; then
+	exit 1
+fi
 
 # generate ssh server key
 

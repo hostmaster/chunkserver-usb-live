@@ -20,14 +20,20 @@ OPTIONS="WITHOUT_IPV6=yes WITHOUT_AUDIT=yes WITHOUT_NLS=yes WITHOUT_LDAP=yes BAT
 for port in ${PORTS}
 do
 
-	make -C /usr/ports/${port} fetch-recursive
-	make -C /usr/ports/${port} ${OPTIONS} install clean
+	make -j 2 -C /usr/ports/${port} fetch-recursive
+	if [ $? -ne 0 ]; then
+		echo "Unable to fetch sources"
+		exit 1
+	fi	
 
+	make -j 2 -C /usr/ports/${port} ${OPTIONS} deinstall install clean 
 	if [ $? -ne 0 ]; then
 		echo "Build FAILED"
 		exit 1
 	fi
 done
+
+echo "Ports has been installed"
 
 # install modified /usr/local/etc/rc.d/mfschunkserver
 install -o root -g wheel -o 755 usr/local/etc/rc.d/mfschunkserver ${USBROOT}/usr/local/etc/rc.d/mfschunkserver

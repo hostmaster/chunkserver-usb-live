@@ -8,5 +8,7 @@ files=`find -E ./build.d -type f  -not -regex '.*(#|~|.bck)$'`
 for stage in ${files}
 do
 	${stage}
-
+	if [ $? -ne 0 ]; then
+		exit 1
+	fi
 done

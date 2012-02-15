@@ -9,3 +9,7 @@ fi
 chflags -R noschg "${USBROOT}"
 rm -rf "${USBROOT}"
 mkdir -p "${USBROOT}"
+if [ $? -ne 0 ]; then
+	echo "Unable to mkdir ${USBROOT}"
+	exit 1
+fi
