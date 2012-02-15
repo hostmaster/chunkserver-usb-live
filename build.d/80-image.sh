@@ -16,9 +16,8 @@ if [ -e ${IMAGE} ]; then
 fi
 
 if mount | grep -q "\\${USBROOT}\/tmp\/mountpoint\."; then
-	echo "Unmount these filesystems first"
-	mount | awk "/\\${USBROOT}\/tmp\/mountpoint\./ { print $3}"
-	exit 1
+	echo "Unmount filesystems first"
+	mount | awk "/\\${USBROOT}\/tmp\/mountpoint\./ { print \$3 }" | xargs umount
 fi
 
 echo '/dev/ufs/FreeBSD / ufs ro,noatime 1 1' > ${USBROOT}/etc/fstab
