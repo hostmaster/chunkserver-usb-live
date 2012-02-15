@@ -4,7 +4,7 @@ export USBROOT=/USBROOT
 export SRC=/usr/src 
 
 
-files=`find -E ./build.d -type f  -not -regex '.*(#|~|.bck)$'`
+files=`find -E ./build.d -type f  -not -regex '.*(#|~|.bck)$' | sort -n`
 for stage in ${files}
 do
 	${stage}

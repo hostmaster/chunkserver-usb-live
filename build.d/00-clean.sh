@@ -6,6 +6,11 @@ if [ -z "${USBROOT}" ]; then
 	exit 1
 fi
 
+if mount | grep -q "\\${USBROOT}\/"; then
+	echo "Unmount filesystems first"
+	mount | awk "/\\${USBROOT}\// { print \$3 }" | xargs umount
+fi
+
 chflags -R noschg "${USBROOT}"
 rm -rf "${USBROOT}"
 mkdir -p "${USBROOT}"
