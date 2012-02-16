@@ -27,6 +27,7 @@ if [ $? -ne 0 ]; then
 fi
 
 makefs -B little -s ${IMAGE_SIZE} -o label=FreeBSD ${IMAGE} ${USBROOT}
+if [ $? -ne 0 ]; then
 	echo "makefs failed"
 	exit 1
 fi

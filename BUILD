@@ -1,4 +1,5 @@
 #!/bin/sh
+#
 
 export USBROOT=/USBROOT 
 export SRC=/usr/src 
