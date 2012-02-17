@@ -4,3 +4,4 @@ syntax: glob
 *~
 *.img
 *.log
+images/*
