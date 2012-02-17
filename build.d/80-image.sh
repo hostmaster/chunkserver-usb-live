@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+
+IMAGE_DIR="images"
 TIMESTAMP=`date +%Y%m%d`
 IMAGE=bsd-${TIMESTAMP}.img
 ZIP=fbsd-${TIMESTAMP}.zip
@@ -52,4 +54,10 @@ mdconfig -d -u ${unit}
 #./make-memstick.sh ${USBROOT} bsd-`date +%F`.img
 
 # make compressed archive
-zip -9uv ${ZIP} ${IMAGE}
+zip -9uv ${IMAGE_DIR}/${ZIP} ${IMAGE}
+if [ $? -ne 0 ]; then
+	echo "zip failed"
+	exit 1
+fi
+rm -f ${IMAGE}
+
