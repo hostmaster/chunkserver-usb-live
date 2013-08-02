@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "Server has been unlocked"
+mount -o rw /
